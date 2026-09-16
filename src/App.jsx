@@ -5,9 +5,6 @@ import { useState } from "react";
 
 // console.log(import.meta.env.VITE_API_KEY);
 
-const API_WEATHER = `https://api.weatherapi.com/v1/current.json?key=${
-  import.meta.env.VITE_API_KEY
-}&q=`;
 
 export default function App() {
   const [city, setCity] = useState("");
@@ -37,7 +34,7 @@ export default function App() {
     try {
       if (!city.trim()) throw { message: "El campo ciudad es obligatorio" };
 
-      const response = await fetch(API_WEATHER + city);
+      const response = await fetch(`/.netlify/functions/weather?city=${city}`);
       const data = await response.json();
 
       if (data.error) throw { message: data.error.message };
